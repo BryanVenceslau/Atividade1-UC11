@@ -1,3 +1,11 @@
+package view;
+
+import java.sql.Connection;
+import data.ProdutosDTO;
+import dao.ProdutosDAO;
+import dao.conectaDAO;
+import javax.swing.JOptionPane;
+
 public class cadastroVIEW extends javax.swing.JFrame {
     public cadastroVIEW() {
         initComponents();
@@ -122,12 +130,31 @@ public class cadastroVIEW extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         ProdutosDTO produto = new ProdutosDTO();
+        ProdutosDAO prodDAO = new ProdutosDAO();
+        conectaDAO dao = new conectaDAO();
+        
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
         String status = "A Venda";
+        Connection conexao;
+        int linhaAfetada;
+        
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
         produto.setStatus(status);
+        
+        conexao = dao.connectDB();
+        if (conexao == null) {
+                JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco de dados");
+        } else {
+            linhaAfetada = prodDAO.cadastrarProduto(produto);
+            if (linhaAfetada == 1) {
+                JOptionPane.showMessageDialog(null, "Dados cadastrados com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar os dados");
+            }
+            dao.desconectar();
+        }
         
         ProdutosDAO produtodao = new ProdutosDAO();
         produtodao.cadastrarProduto(produto);  
