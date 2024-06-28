@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class listagemVIEW extends javax.swing.JFrame {
     public listagemVIEW() {
         initComponents();
+        setLocationRelativeTo(null);
+        
         listarProdutos();
     }
 
@@ -180,13 +183,11 @@ public class listagemVIEW extends javax.swing.JFrame {
     private void listarProdutos(){
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
-            
             DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
             model.setNumRows(0);
             
             ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
+            for (int i = 0; i < listagem.size(); i++) {
                 model.addRow(new Object[]{
                     listagem.get(i).getId(),
                     listagem.get(i).getNome(),
@@ -195,7 +196,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
-        
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 }
