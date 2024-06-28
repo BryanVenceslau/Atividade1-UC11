@@ -12,7 +12,7 @@ public class ProdutosDAO {
         this.conectaDAO = new conectaDAO();
     }
     
-    public void cadastrarProduto (ProdutosDTO produto){ 
+    public boolean cadastrarProduto (ProdutosDTO produto){ 
         Connection conn = conectaDAO.getConnection();
         String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
 
@@ -22,9 +22,11 @@ public class ProdutosDAO {
             stmt.setString(3, produto.getStatus());
             
             stmt.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
+            return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
+            return false;
+
         }
     }
     

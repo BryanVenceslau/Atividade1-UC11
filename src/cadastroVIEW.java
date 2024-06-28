@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 public class cadastroVIEW extends javax.swing.JFrame {
     public cadastroVIEW() {
         initComponents();
@@ -125,14 +128,23 @@ public class cadastroVIEW extends javax.swing.JFrame {
         String nome = cadastroNome.getText();
         String valor = cadastroValor.getText();
         String status = "A Venda";
-        
+
+        if (!validarProduto(nome, valor)) {
+            return;
+        }
         ProdutosDTO produto = new ProdutosDTO();
         produto.setNome(nome);
         produto.setValor(Integer.parseInt(valor));
         produto.setStatus(status);
         
         ProdutosDAO produtodao = new ProdutosDAO();
-        produtodao.cadastrarProduto(produto);  
+        boolean sucesso = produtodao.cadastrarProduto(produto);
+        
+        if (sucesso) {
+            JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao cadastrar produto.");
+        }
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProdutosActionPerformed
@@ -183,4 +195,16 @@ public class cadastroVIEW extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
+    private boolean validarProduto(String nome, String valor) {
+        if (nome == null || nome.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Não foi possível cadastrar o produto. O nome do produto é obrigatório.");
+            return false;
+        }
+
+        if (valor == null || valor.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Não foi possível cadastrar o produto. O valor do produto é obrigatório.");
+            return false;
+        }
+        return true;
+    }
 }
