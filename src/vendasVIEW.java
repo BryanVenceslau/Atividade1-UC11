@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 public class vendasVIEW extends javax.swing.JFrame {
     public vendasVIEW() {
         initComponents();
+        setLocationRelativeTo(null);
         
         listarProdutosVendidos();
     }
@@ -23,13 +24,10 @@ public class vendasVIEW extends javax.swing.JFrame {
 
         tabelaProdutosVendidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nome", "Valor", "Status"
             }
         ));
         tblProdutosVendidos.setViewportView(tabelaProdutosVendidos);
